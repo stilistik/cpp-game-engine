@@ -23,7 +23,6 @@ void Camera::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 	}
 }
 
-
 void Camera::mouseCallback(GLFWwindow* window, int button, int action, int mods){
 	if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS){
 		button1_pressed = true;

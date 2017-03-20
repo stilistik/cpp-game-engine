@@ -17,20 +17,14 @@
 #include "../objLoader/OBJFileLoader.h"
 #include "../entities/Player.h"
 
-/*TODO
- *
- *
- */
-
-
-
 int main(void)
 {
+	// managers
 	Display display = Display();
 	Loader loader = Loader();
 	MasterRenderer renderer;
 
-
+	// models and entities
 	ModelData dragonData = OBJFileLoader::loadObjModel("res/dragon.obj", loader);
 	RawModel dragonRawModel = loader.loadToVAO(dragonData.getVertices(), dragonData.getTexCoords(), dragonData.getNormals(), dragonData.getIndices());
 	ModelTexture dragonTexture = ModelTexture(loader.loadTexture("res/blank.png"));
@@ -39,7 +33,6 @@ int main(void)
 	TexturedModel dragonTexturedModel = TexturedModel(dragonRawModel, dragonTexture);
 	Player player = Player(dragonTexturedModel, glm::vec3(500,0,500), 0,0,0,1);
 	Camera camera = Camera(std::shared_ptr<Player>(&player));
-
 
 	ModelData treeData = OBJFileLoader::loadObjModel("res/lowPolyTree.obj", loader);
 	RawModel treeRawModel = loader.loadToVAO(treeData.getVertices(), treeData.getTexCoords(), treeData.getNormals(), treeData.getIndices());
@@ -75,6 +68,7 @@ int main(void)
 	Light light = Light(glm::vec3(0,1000,0), glm::vec3(1,1,1));
 
 
+	// main loop
 	while (!glfwWindowShouldClose(display.window)){
 		player.move();
 		camera.move();

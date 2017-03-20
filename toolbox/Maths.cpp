@@ -28,7 +28,6 @@ glm::mat4 Maths::createViewMatrix(const Camera& camera){
 	return viewMatrix;
 }
 
-
 float Maths::toRadians(const float angle){
 	double halfC = PI / 180;
 	return angle * halfC;
