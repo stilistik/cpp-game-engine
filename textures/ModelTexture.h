@@ -2,7 +2,9 @@
  * ModelTexture.h
  *
  *  Created on: 05.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This class represents a texture for a textured model
  */
 
 #ifndef MODELTEXTURE_H_
@@ -23,6 +25,7 @@ public:
 
 	ModelTexture(GLuint id);
 
+	// getter & setter
 	GLuint getTextureID() const { return textureID; }
 	float getReflectivity() const {	return reflectivity; }
 	void setReflectivity(float r) { reflectivity = r; }

@@ -2,7 +2,10 @@
  * Loader.h
  *
  *  Created on: 04.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ * The loader class has the purpose of populating OpenGL data structures with model data. The vertices, normals and texture
+ * coordinates of our models are loaded into VAOs and VBOs, which can then be bound by OpenGL for rendering.
  */
 
 #ifndef LOADER_H_
@@ -11,12 +14,13 @@
 #include <GL/glew.h>
 #include <vector>
 #include "../models/RawModel.h"
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 
 
 class Loader {
 private:
 
+	// loader keeps track of created buffers and objects
 	std::vector<GLuint> vaos;
 	std::vector<GLuint> vbos;
 	std::vector<GLuint> textures;

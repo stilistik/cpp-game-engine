@@ -2,7 +2,10 @@
  * TerrainTexturePack.h
  *
  *  Created on: 09.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This class represents a collection of 4 different terrain textures. These textures are then blended together in the shader
+ *  using a blend map
  */
 
 #ifndef TERRAINTEXTUREPACK_H_

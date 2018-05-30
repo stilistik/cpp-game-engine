@@ -2,7 +2,9 @@
  * TexturedModel.h
  *
  *  Created on: 05.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  A TexturedModel is a RawModel with a texture added to it.
  */
 
 #ifndef TEXTUREDMODEL_H_

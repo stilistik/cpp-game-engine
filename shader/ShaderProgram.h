@@ -2,7 +2,11 @@
  * ShaderProgram.h
  *
  *  Created on: 05.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *
+ *  The Base class for shader programs. This implements shader source parsing, compiling and linking of shader programs, as well as
+ *  uploading of the most general datatypes as uniform variables to the shader program.
  */
 
 #ifndef SHADERPROGRAM_H_
@@ -32,10 +36,6 @@ protected:
 	void loadVector3f(const int location, const glm::vec3& v);
 	void loadBoolean(const int location, const bool value);
 	void loadMatrix4f(const int location, const glm::mat4& m);
-
-
-
-
 
 public:
 

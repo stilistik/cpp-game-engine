@@ -2,7 +2,11 @@
  * Entity.h
  *
  *  Created on: 06.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  The Entity class represent game objects. An entity consists of a textured model instance that defines the look of the entity,
+ *  as well as position, rotation and scale parameters that define its location, orientation and size.
+ *
  */
 
 #ifndef ENTITY_H_

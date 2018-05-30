@@ -2,7 +2,9 @@
  * TerrainRenderer.h
  *
  *  Created on: 07.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This is a specialized Renderer for Terrains
  */
 
 #ifndef TERRAINRENDERER_H_
@@ -23,12 +25,12 @@
 class TerrainRenderer {
 private:
 
-	std::shared_ptr<TerrainShader> shader;
+	// pointer to the corresponding shader instance
+	TerrainShader* shader;
 
 public:
 
-	TerrainRenderer();
-	TerrainRenderer(std::shared_ptr<TerrainShader> s, glm::mat4& projectionMatrix);
+	TerrainRenderer(TerrainShader* s, glm::mat4& projectionMatrix);
 	void render(std::vector<Terrain>& terrains);
 	void prepareTerrain(Terrain& terrain);
 	void bindTextures(Terrain& terrain);

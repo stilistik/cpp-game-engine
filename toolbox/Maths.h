@@ -2,7 +2,10 @@
  * Maths.h
  *
  *  Created on: 06.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *
+ *  This is a simple container class for mathematical operations that are used throughout the program.
  */
 
 #ifndef MATHS_H_

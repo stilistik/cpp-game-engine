@@ -2,7 +2,9 @@
  * Renderer.h
  *
  *  Created on: 05.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This is the renderer class for entities (game objects).
  */
 
 #ifndef ENTITYRENDERER_H_
@@ -22,12 +24,12 @@
 class EntityRenderer {
 private:
 
-	std::shared_ptr<StaticShader> shader;
+	// pointer to the corresponding shader instance
+	StaticShader* shader;
 
 public:
 
-	EntityRenderer();
-	EntityRenderer(std::shared_ptr<StaticShader> s, glm::mat4& projectionMatrix);
+	EntityRenderer(StaticShader* s, glm::mat4& projectionMatrix);
 	void render(std::map<TexturedModel, std::vector<Entity>> entities);
 	void prepareTexturedModel(TexturedModel& model);
 	void prepareInstance(Entity& entity);

@@ -2,7 +2,12 @@
  * DisplayManager.h
  *
  *  Created on: 04.11.2016
- *      Author: Philipp
+ *
+ *      Author: Philipp Gerber
+ *
+ *  This class represents an OpenGL render context. It also provides the functionality to compute the time
+ *  elapsed since the last frame was rendered. This allows to make physical computations based on elapsed time.
+ *
  */
 
 #ifndef DISPLAY_H_

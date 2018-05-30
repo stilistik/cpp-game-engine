@@ -2,7 +2,13 @@
  * CallbackBase.h
  *
  *  Created on: 06.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This class is a callback base for the GLFW user input callback functions. We cannot define C++ class member functions as
+ *  callbacks for GLFW, since it only accepts C-style functions without the 'this' argument. Hence, CallbackBase provides static
+ *  dispatcher functions to use as callbacks for GLFW and maintains a list of handling instances. These handling instances inherit
+ *  callback methods from CallBackBase. If the user then presses a key, the GLFW callback will call the callback-dispatcher
+ *  functions, which in turn will call the callback methods of the individual handling instances.
  */
 
 #ifndef CALLBACKBASE_H_
@@ -24,26 +30,25 @@ public:
 
 	virtual ~CallbackBase();
 
+	// collections of handler instances that are notified by the dispatchers
 	static std::list<CallbackBase*> keyHandlingInstances;
 	static std::list<CallbackBase*> mouseHandlingInstances;
 	static std::list<CallbackBase*> scrollHandlingInstances;
 	static std::list<CallbackBase*> cursorHandlingInstances;
 
-	static CallbackBase* keyHandlingInstance;
-	static CallbackBase* mouseHandlingInstance;
-	static CallbackBase* scrollHandlingInstance;
-	static CallbackBase* cursorHandlingInstance;
+	// virtual methods that can be overridden by the derived classes
+	virtual void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {};
+	virtual void mouseCallback(GLFWwindow* window, int button, int action, int mods) {};
+	virtual void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {};
+	virtual void cursorCallback(GLFWwindow* window, double xpos, double ypos) {};
 
-	virtual void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-	virtual void mouseCallback(GLFWwindow* window, int button, int action, int mods);
-	virtual void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-	virtual void cursorCallback(GLFWwindow* window, double xpos, double ypos);
-
+	// called by derived classes to set them as handlers
 	virtual void setKeyHandling();
 	virtual void setMouseHandling();
 	virtual void setScrollHandling();
 	virtual void setCursorHandling();
 
+	// static functions to serve as GLFW callbacks (no 'this' argument in static functions)
 	static void keyCallback_dispatcher(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouseCallback_dispatcher(GLFWwindow* window, int button, int action, int mods);
 	static void scrollCallback_dispatcher(GLFWwindow* window, double xoffset, double yofsset);

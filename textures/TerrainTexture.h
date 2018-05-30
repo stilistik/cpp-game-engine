@@ -2,7 +2,9 @@
  * TerrainTexture.h
  *
  *  Created on: 09.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This is a simple container class for a terrain texture
  */
 
 #ifndef TERRAINTEXTURE_H_

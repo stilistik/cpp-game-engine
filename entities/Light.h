@@ -2,7 +2,10 @@
  * Light.h
  *
  *  Created on: 07.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This class implements a simple point light source. It has a color and emits light radially from
+ *  its position.
  */
 
 #ifndef LIGHT_H_
@@ -18,7 +21,10 @@ private:
 
 public:
 
+	// ctor
 	Light(glm::vec3 p, glm::vec3 c);
+
+	// getter & setter
 	const glm::vec3& getColor() const { return color; }
 	void setColor(const glm::vec3& c) {	color = c; }
 	const glm::vec3& getPosition() const { return position; }

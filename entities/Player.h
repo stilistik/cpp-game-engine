@@ -2,7 +2,10 @@
  * Player.h
  *
  *  Created on: 15.12.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  The player class is a special type of entity that can be controlled by the user. it implements key callback methods
+ *  for this purpose.
  */
 
 #ifndef PLAYER_H_
@@ -21,13 +24,16 @@
 class Player: public Entity, public CallbackBase {
 private:
 
+	// physical constants
 	const float RUN_SPEED = 20;
 	const float TURN_SPEED = 2;
 	const float GRAVITY = -50;
 	const float JUMP_POWER = 30;
 
+	// dummy terrain collision
 	const float TERRAIN_HEIGHT = 0;
 
+	// state variables
 	float currentSpeed;
 	float currentTurnSpeed;
 	float upwardsSpeed;

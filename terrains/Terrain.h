@@ -2,7 +2,7 @@
  * Terrain.h
  *
  *  Created on: 07.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
  */
 
 #ifndef TERRAIN_H_
@@ -17,11 +17,14 @@
 class Terrain {
 private:
 
-	const static float SIZE;;
-	const static int VERTEX_COUNT;;
 
-	float x;
-	float z;
+	const static float SIZE; // the size of a terrain patch
+	const static int VERTEX_COUNT; // the vertex count of a terrain patch
+
+	float x; // x coordinate of this terrain patch
+	float z; // z coordinate of this terrain patch
+
+	// model and textures of this terrain patch
 	RawModel model;
 	TerrainTexturePack texturePack;
 	TerrainTexture blendMap;

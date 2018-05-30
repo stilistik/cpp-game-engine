@@ -2,7 +2,9 @@
  * ModelData.h
  *
  *  Created on: 09.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  A simple container data structure for geometric model data. Stores vertices, normals, texture coordinates and indices.
  */
 
 #ifndef MODELDATA_H_
@@ -13,11 +15,12 @@
 class ModelData {
 private:
 
+	// data
 	std::vector<float> vertices;
 	std::vector<float> texCoords;
 	std::vector<float> normals;
 	std::vector<int> indices;
-	float furthestPoint;
+	float furthestPoint; // furthest point from the models
 
 public:
 

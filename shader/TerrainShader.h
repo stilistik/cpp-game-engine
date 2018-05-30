@@ -2,7 +2,10 @@
  * TerrainShader.h
  *
  *  Created on: 07.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This class represents a specialized shader program for terrains.
+ *
  */
 
 #ifndef TERRAINSHADER_H_
@@ -15,9 +18,11 @@
 class TerrainShader : public ShaderProgram {
 private:
 
+	// shader source locations
 	const char* VERTEX_FILE = "shaderfiles/TerrainVertexShader.txt";
 	const char* FRAGMENT_FILE = "shaderfiles/TerrainFragmentShader.txt";
 
+	// locations of uniform variables
 	GLint location_transformationMatrix;
 	GLint location_projectionMatrix;
 	GLint location_viewMatrix;

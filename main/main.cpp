@@ -13,27 +13,29 @@
 #include "../entities/Entity.h"
 #include "../entities/Camera.h"
 #include "../renderEngine/MasterRenderer.h"
-#include "../renderEngine/OBJLoader.h"
 #include "../objLoader/OBJFileLoader.h"
 #include "../entities/Player.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	// managers
+	// create display, loader and master renderer
 	Display display = Display();
 	Loader loader = Loader();
 	MasterRenderer renderer;
 
-	// models and entities
+	// player model
 	ModelData dragonData = OBJFileLoader::loadObjModel("res/dragon.obj", loader);
 	RawModel dragonRawModel = loader.loadToVAO(dragonData.getVertices(), dragonData.getTexCoords(), dragonData.getNormals(), dragonData.getIndices());
 	ModelTexture dragonTexture = ModelTexture(loader.loadTexture("res/blank.png"));
 	dragonTexture.setReflectivity(1);
 	dragonTexture.setShineDamper(10);
 	TexturedModel dragonTexturedModel = TexturedModel(dragonRawModel, dragonTexture);
-	Player player = Player(dragonTexturedModel, glm::vec3(500,0,500), 0,0,0,1);
-	Camera camera = Camera(std::shared_ptr<Player>(&player));
 
+	// setup the player instance, pass a pointer to the camera object
+	std::unique_ptr<Player> player(new Player(dragonTexturedModel, glm::vec3(500,0,500), 0,0,0,1));
+	Camera camera = Camera(player.get());
+
+	// trees
 	ModelData treeData = OBJFileLoader::loadObjModel("res/lowPolyTree.obj", loader);
 	RawModel treeRawModel = loader.loadToVAO(treeData.getVertices(), treeData.getTexCoords(), treeData.getNormals(), treeData.getIndices());
 	ModelTexture treeTexture = ModelTexture(loader.loadTexture("res/lowPolyTree.png"));
@@ -44,7 +46,9 @@ int main(void)
 		trees.push_back(tree);
 	}
 
-	RawModel grassRawModel = OBJLoader::loadObjModel("res/grassModel.obj", loader);
+	// grass
+	ModelData grassData = OBJFileLoader::loadObjModel("res/grassModel.obj", loader);
+	RawModel grassRawModel = loader.loadToVAO(grassData.getVertices(), grassData.getTexCoords(), grassData.getNormals(), grassData.getIndices());
 	ModelTexture grassTexture = ModelTexture(loader.loadTexture("res/grassTexture.png"));
 	grassTexture.setHasTransparency(true);
 	grassTexture.setFakeLight(true);
@@ -55,6 +59,7 @@ int main(void)
 		grasses.push_back(grass);
 	}
 
+	// terrains
 	TerrainTexture backgroundTexture = TerrainTexture(loader.loadTexture("res/grass.png"));
 	TerrainTexture rTexture = TerrainTexture(loader.loadTexture("res/path.png"));
 	TerrainTexture gTexture = TerrainTexture(loader.loadTexture("res/grassFlowers.png"));
@@ -70,21 +75,28 @@ int main(void)
 
 	// main loop
 	while (!glfwWindowShouldClose(display.window)){
-		player.move();
-		camera.move();
+		player->move(); // move player first
+		camera.move(); // camera position depends on player
+
+		// render terrains
 		renderer.processTerrain(terrain1);
 		renderer.processTerrain(terrain2);
+
+		// render entities
 		for(Entity tree : trees){
 			renderer.processEntity(tree);
 		}
 		for(Entity grass : grasses){
 			renderer.processEntity(grass);
 		}
-		renderer.processEntity(player);
+		renderer.processEntity(*player);
 		renderer.render(light, camera);
+
+		// clear the buffer and fill it with the new render result
 		display.update();
 	}
 
+	// clean up objects created in the graphics unit
 	renderer.cleanUp();
 	loader.cleanUp();
 	display.close();

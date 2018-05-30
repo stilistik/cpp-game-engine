@@ -2,30 +2,39 @@
  * MasterRenderer.cpp
  *
  *  Created on: 07.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
  */
 
 #include "MasterRenderer.h"
 
+/*
+ * ctor: Create the projection matrix (this is constant at runtime) and load it up to the different shader instances.
+ */
 MasterRenderer::MasterRenderer(){
-	enableCulling();
+	enableCulling(); // only front facing triangles are rendered
 	createProjectionMatrix();
-	staticShader = std::shared_ptr<StaticShader>(new StaticShader());
-	entityRenderer = std::shared_ptr<EntityRenderer>( new EntityRenderer(staticShader, projectionMatrix));
-	terrainShader = std::shared_ptr<TerrainShader>(new TerrainShader());
-	terrainRenderer = std::shared_ptr<TerrainRenderer>(new TerrainRenderer(terrainShader, projectionMatrix));
+	staticShader = std::unique_ptr<StaticShader>(new StaticShader());
+	entityRenderer = std::unique_ptr<EntityRenderer>( new EntityRenderer(staticShader.get(), projectionMatrix));
+	terrainShader = std::unique_ptr<TerrainShader>(new TerrainShader());
+	terrainRenderer = std::unique_ptr<TerrainRenderer>(new TerrainRenderer(terrainShader.get(), projectionMatrix));
 }
 
-MasterRenderer::~MasterRenderer(){}
-
+/*
+ * This prepares the renderer for the next frame.
+ */
 void MasterRenderer::prepare(){
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST); // perform the depth test so occluded triangles are not rendered
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-	glClearColor(RED,GREEN,BLUE,1);
+	glClearColor(RED,GREEN,BLUE,1); // clear the color buffer
 }
 
+/*
+ * Main render method
+ */
 void MasterRenderer::render(Light& sun, Camera& camera){
 	prepare();
+
+	// render entities
 	staticShader->start();
 	staticShader->loadSkyColor(RED, GREEN, BLUE);
 	staticShader->loadLight(sun);
@@ -33,6 +42,7 @@ void MasterRenderer::render(Light& sun, Camera& camera){
 	entityRenderer->render(entities);
 	staticShader->stop();
 
+	// render terrains
 	terrainShader->start();
 	terrainShader->loadSkyColor(RED, GREEN, BLUE);
 	terrainShader->loadLight(sun);
@@ -40,10 +50,15 @@ void MasterRenderer::render(Light& sun, Camera& camera){
 	terrainRenderer->render(terrains);
 	terrainShader->stop();
 
+	// clear the list of terrains and entities, since they can change at runtime
 	terrains.clear();
 	entities.clear();
 }
 
+/*
+ * This creates batches of entities that use the same textured model. This allows for batch rendering, where the model
+ * is only loaded up once to the shaders and then rendered at different positions and orientations defined by the entity instances.
+ */
 void MasterRenderer::processEntity(Entity& entity){
 	TexturedModel model = entity.getModel();
 	std::vector<Entity> batch = entities[model];
@@ -61,20 +76,32 @@ void MasterRenderer::processTerrain(Terrain& terrain){
 	terrains.push_back(terrain);
 }
 
+/*
+ * Static method to enableCulling after a transparent object was rendered
+ */
 void MasterRenderer::enableCulling(){
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 }
 
+/*
+ * Static method to disableCulling when rendering a transparent object
+ */
 void MasterRenderer::disableCulling(){
 	glDisable(GL_CULL_FACE);
 }
 
+/*
+ * This has to be called on program exit in order to delete the shader programs on the graphics unit
+ */
 void MasterRenderer::cleanUp(){
 	staticShader->cleanUp();
 	terrainShader->cleanUp();
 }
 
+/*
+ * Helper method to create a projection matrix from frustum parameters
+ */
 void MasterRenderer::createProjectionMatrix(){
 	float aspectRatio = (float) Display::WIDTH / (float) Display::HEIGHT;
 	float y_scale = (float) ((1 / tan(Maths::toRadians(FOV/2))) * aspectRatio);

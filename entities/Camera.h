@@ -2,7 +2,7 @@
  * Camera.h
  *
  *  Created on: 06.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
  */
 
 #ifndef CAMERA_H_
@@ -20,12 +20,11 @@
 
 class Player;
 
-typedef std::shared_ptr<Player> PlayerPointer;
 
 class Camera : public CallbackBase{
 private:
 
-	PlayerPointer player;
+	Player* player;
 
 	const float maxCamVelocity = 100;
 	const float resetSpeed = 1;
@@ -44,7 +43,7 @@ private:
 
 public:
 
-	Camera(PlayerPointer p);
+	Camera(Player* p);
 
 	virtual void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) override;
 	virtual void mouseCallback(GLFWwindow* window, int button, int action, int mods) override;

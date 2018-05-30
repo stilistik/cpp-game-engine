@@ -2,7 +2,10 @@
  * StaticShader.h
  *
  *  Created on: 05.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *
+ *  This class represents a specialized shader program for static (i.e. non-animated) entities.
  */
 
 #ifndef STATICSHADER_H_
@@ -15,9 +18,11 @@
 class StaticShader : public ShaderProgram {
 private:
 
+	// shader source locations
 	const char* VERTEX_FILE = "shaderfiles/VertexShader.txt";
 	const char* FRAGMENT_FILE = "shaderfiles/FragmentShader.txt";
 
+	// locations of uniform variables
 	GLint location_transformationMatrix;
 	GLint location_projectionMatrix;
 	GLint location_viewMatrix;

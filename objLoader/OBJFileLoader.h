@@ -2,7 +2,9 @@
  * OBJLoader.h
  *
  *  Created on: 06.11.2016
- *      Author: Philipp
+ *      Author: Philipp Gerber
+ *
+ *  This class allows reading and parsing of OBJ files into the ModelData structure.
  */
 
 #ifndef OBJFILELOADER_H_
