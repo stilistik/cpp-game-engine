@@ -6,7 +6,7 @@ OpenGL based rendering system written in C++
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
+#### Prerequisites
 
 Run the following command to install dependencies locally on your system:
 
@@ -15,7 +15,7 @@ sudo apt-get install libglew-dev libglfw3-dev libglfw3 freeglut3-dev libsoil-dev
 ```
 
 
-### Build
+#### Build
 
 Change directory into your project folder, then run
 
@@ -24,7 +24,7 @@ cd Debug
 make all
 ```
 
-### Run
+#### Run
 
 To run the engine, change directory in to your project folder, then run
 
