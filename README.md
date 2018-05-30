@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 Run the following command to install dependencies locally on your system:
 
 ```
-sudo apt-get install libglew-dev libglfw3-dev libglfw3 freeglut3-dev libsoil-dev
+sudo apt-get install libglew-dev libglfw3-dev libglfw3 freeglut3-dev libsoil-dev libglm-dev
 ```
 
 
